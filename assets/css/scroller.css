@@ -1,0 +1,32 @@
+.company-list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.company-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+.scroller {
+    position: relative;
+    width: 100%;
+}
+
+.scroller__inner {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    flex-wrap: nowrap;
+    cursor: grab;
+}
+
+.scroller__inner:active {
+    cursor: grabbing;
+}
+
+.scroller__inner img {
+    user-select: none;
+    -webkit-user-drag: none;
+} 
