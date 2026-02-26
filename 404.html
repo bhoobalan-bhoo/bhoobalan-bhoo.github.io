@@ -1,14 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
+    <meta charset="utf-8" />
     <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=index.html">
-</head>
-<body>
     <script>
-        window.location.href = "index.html";
+      // GitHub Pages serves 404.html for any unmatched route
+      // Redirect to bhoobalan.in preserving the current path + query + hash
+      const destination =
+        "https://www.bhoobalan.in" +
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
+      window.location.replace(destination);
     </script>
-</body>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=https://www.bhoobalan.in" />
+    </noscript>
+  </head>
+  <body>
+    <p>Redirecting to <a href="https://www.bhoobalan.in">bhoobalan.in</a>...</p>
+  </body>
 </html>
